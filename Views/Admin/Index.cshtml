@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Users</h2>
+
+@foreach (var user in ViewBag.Users)
+{
+    <p> @user.Email</p>
+    <a class="btn btn-success" href="/Admin/Edit/@user.Id">Editare user</a>
+
+    <br/>
+    <hr/>
+    <br/>
+}
+

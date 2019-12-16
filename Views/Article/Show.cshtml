@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Show";
+}
+
+<h1>Afisare articol</h1>
+
+<h2>@ViewBag.Article.Title</h2>
+<p>@ViewBag.Article.Content</p>
+<p>@ViewBag.Article.Date</p>
+
+<p>Categorie: @ViewBag.Category.CategoryName</p>
+
+
+
+@if (User.IsInRole("Administrator") || User.IsInRole("Editor") || ViewBag.Article.UserId == User.Identity.GetUserId())
+{
+    <a class="btn btn-success" href="/Article/Edit/@ViewBag.Article.Id">Modifica articol</a>
+    <br />
+}
+
+
+@if (User.IsInRole("Administrator") || User.IsInRole("Editor") || ViewBag.Article.UserId == User.Identity.GetUserId())
+{
+    <form method="post" action="/Article/Delete/@ViewBag.Article.Id">
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <br />
+        <button class="btn btn-success" type="submit">Sterge articol</button>
+    </form>
+    <br />
+}
+<br />
+
+
+<h3>Adauga comentariu:</h3>
+<form method="post" action="/Article/AddComment">
+    <textarea type="text" name="Content" rows="5" style="width: 100%; max-width: 100%;"></textarea>
+    <br />
+    <input type="hidden" name="ArticleId" value="@ViewBag.Article.Id" />
+    <input type="hidden" name="Date" value="@DateTime.Now" />
+    <button class="btn btn-success" type="submit">Adauga</button>
+</form>
+
+
+
+<h3>Comentarii:</h3>
+@foreach (var comment in ViewBag.Article.Comments)
+{
+
+    <div class="jumbotron" style="display: flex; flex-direction: column;">
+        <div style="display: flex;">
+            <span>@comment.User.Email</span>
+            <div style="color: dimgray; margin-left: 12px;">
+                @comment.Date.ToLocalTime()
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between;margin-top: 24px;">
+            <div style="font-size: 20px;">@comment.Content</div>
+            @if (User.IsInRole("Administrator") || User.IsInRole("Editor") || comment.User.Id == User.Identity.GetUserId())
+            {
+                <form method="post" action="/Article/DeleteComment/@comment.Id">
+                    <button class="btn btn-danger" type="submit">X</button>
+                </form>
+            }
+        </div>
+    </div>
+}
+
+
+
+<br />
+<hr />
+<a class="btn btn-success" href="/Article/Index">Inapoi la articole</a>
+<br />
+<br />
+
+

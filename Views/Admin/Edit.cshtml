@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>User: @ViewBag.User.UserName</h2>
+
+<p>Role:</p>
+
+
+<form method="post" action="/Admin/Edit/@ViewBag.User.Id">
+
+    <select name="RoleId">
+        @foreach (var role in ViewBag.Roles)
+        {
+            <option @{ var cici = ((IEnumerable<dynamic>)ViewBag.User.Roles).FirstOrDefault(e => e.RoleId == role.Id) != null; if (cici) { @: selected="selected"
+                    } }
+                    value="@role.Id">
+                @role.Name
+            </option>
+        }
+    </select>
+
+    <button class="btn btn-success" type="submit">Modifica rol user</button>
+
+</form>

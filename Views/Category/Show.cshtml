@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Afisare categorie";
+}
+
+<h2>Categoria : @ViewBag.Category.CategoryName</h2>
+
+
+<div>
+    @{ foreach (var article in ViewBag.Category.Article)
+        {
+            <h2>@article.Title</h2>
+            <p>@article.Content</p>
+            <p>@article.Date</p>
+            <a href="/Article/Show/@article.Id">Afisare articol</a>
+            <br />
+            <hr />
+            <br />
+        }}
+</div>
+<br />
+
+
+<a class="btn btn-success" href="/Article/New">Creare articol</a>
+<br />
+<br />
+
+@if (User.IsInRole("Administrator"))
+{
+    <form method="post" action="/Category/Delete/@ViewBag.Category.CategoryId">
+
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+        <button class="btn btn-success" type="submit">Sterge categoria</button>
+
+    </form>
+    <br />
+}
+<a class="btn btn-success" href="/Category/Index/">Afisare lista categorii</a>
+
+<br />
+<hr />
+<br />
+

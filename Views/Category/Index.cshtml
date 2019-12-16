@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Lista categorii";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@foreach (var category in ViewBag.Categories)
+{
+    <p>@category.CategoryName</p>
+    <a class="btn btn-success" href="/Category/Show/@category.CategoryId">Afisare categorie</a>
+
+    if (User.IsInRole("Administrator"))
+    {
+        <a class="btn btn-success" href="/Category/Edit/@category.CategoryId">Editare categorie</a>
+    }
+    <br />
+    <hr />
+    <br />
+}
+<br />
+@if (User.IsInRole("Administrator")) 
+{
+    <a class="btn btn-info" href="/Category/New">Adauga o noua categorie</a>
+}
+<br />
+
