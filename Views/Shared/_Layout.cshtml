@@ -17,23 +17,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Forum", "Index", "Category", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Articles", "Index", "Article")</li>
                     <li>@Html.ActionLink("Categories", "Index", "Category")</li>
-                    
+                    <li>@Html.ActionLink("Articles", "Index", "Article")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+
                     @if (User.IsInRole("Administrator"))
                     {
                         <li> @Html.ActionLink("Users", "Index", "Admin") </li>
                     }
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
                 </ul>
+
                 @Html.Partial("_LoginPartial")
+                <form class="navbar-right" style="margin-top: 8px; margin-right: 24px;" method="post" action="/Article/Search">
+                    <input type="text" name="SearchValue" />
+                    <button class="btn" type="submit">Search</button>
+                </form>
             </div>
         </div>
     </div>

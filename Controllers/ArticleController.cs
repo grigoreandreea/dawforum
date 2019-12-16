@@ -135,5 +135,18 @@ namespace ForumDAW.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Search(String SearchValue)
+        {
+            var articles = db.Articles
+                .Where(article => article.Title.Contains(SearchValue) 
+                               || article.Content.Contains(SearchValue) 
+                               || article.Comments.FirstOrDefault(comment => comment.Content.Contains(SearchValue)) != null)
+                .ToList();
+
+            ViewBag.Articles = articles;
+            return View("Index");
+        }
+
     }
 }
