@@ -3,7 +3,19 @@
     ViewBag.Title = "Afisare articole";
 }
 
-<h2>@ViewBag.Title</h2>
+<div style="display: flex; justify-content: space-between;">
+    <h2>@ViewBag.Title</h2>
+    <form style="margin: auto 0;" method="post" action="/Article/SortArticles">
+        <select class="form-control" name="SortType" onchange="this.form.submit()">
+            <option value="Recent" selected="@(ViewBag.SortType == "Recent")">
+                Cele mai recente
+            </option>            
+            <option value="Discussed" selected="@(ViewBag.SortType == "Discussed")">
+                Cele mai discutate
+            </option>
+        </select>
+    </form>
+</div>
 <hr />
 @foreach (var article in ViewBag.Articles)
 {

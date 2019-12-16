@@ -15,7 +15,9 @@ namespace ForumDAW.Controllers
         // GET: Article
         public ActionResult Index()
         {
-            var articles = db.Articles.Include("Category");
+            var articles = db.Articles
+                .OrderByDescending(article => article.Date)
+                .ToList();
             ViewBag.Articles = articles;
 
             return View("Index");
@@ -146,6 +148,25 @@ namespace ForumDAW.Controllers
 
             ViewBag.Articles = articles;
             return View("Index");
+        }
+
+
+        [HttpPost]
+        public ActionResult SortArticles(String SortType)
+        {
+            var articles = db.Articles
+                    .OrderByDescending(article => article.Date).ToList();
+            ViewBag.Articles = articles;
+
+            if (SortType == "Discussed")
+            {
+                articles = db.Articles
+                    .OrderByDescending(article => article.Comments.Count)
+                    .ToList();
+                ViewBag.Articles = articles;
+            }
+            ViewBag.SortType = SortType;
+             return View("Index");
         }
 
     }
